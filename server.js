@@ -65,11 +65,17 @@ app.post("/spend", (req, res) => {
 
 // Get current token balance
 app.get("/tokens", (req, res) => {
+  res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+  res.setHeader("Pragma", "no-cache");
+  res.setHeader("Expires", "0");
   res.status(200).json({ tokens: userTokens });
 });
 
 // Get transaction history
 app.get("/transactionsHistory", (req, res) => {
+  res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+  res.setHeader("Pragma", "no-cache");
+  res.setHeader("Expires", "0");
   res.status(200).json({ transactions: transactions });
 });
 

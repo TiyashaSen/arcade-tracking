@@ -18,17 +18,19 @@ export class TokenSystemComponent {
   purchaseAmount = 0;
   purchaseDescription = "";
   spendAmount = 0;
-  tokenBalance = 0;
+  //tokenBalance = 0;
   spendDescription: string = ""; // add initialization here
   transactionHistory: Transaction[] = [];
+  tokenBalance: number | null = null;
 
   constructor(private http: HttpClient) {
     this.spendDescription = "";
+    this.transactionHistory = [];
+    this.tokenBalance = null;
   }
 
   ngOnInit() {
     this.refreshTokenBalance();
-    this.refreshTransactionHistory();
   }
 
   purchaseTokens() {
@@ -36,7 +38,13 @@ export class TokenSystemComponent {
     this.http.post<{ message: string }>('http://localhost:3000/purchase', data)
       .subscribe(response => {
         this.refreshTokenBalance();
-        this.refreshTransactionHistory();
+        this.http.get<{ transactions: Transaction[] }>('http://localhost:3000/transactionsHistory')
+          .subscribe(response => {
+            this.transactionHistory = response.transactions;
+            console.log(this.transactionHistory);
+          }, error => {
+            console.log(error);
+          });
         alert(response.message);
       }, error => {
         console.log(error);
@@ -48,7 +56,13 @@ export class TokenSystemComponent {
     this.http.post<{ message: string }>('http://localhost:3000/spend', data)
       .subscribe(response => {
         this.refreshTokenBalance();
-        this.refreshTransactionHistory();
+        this.http.get<{ transactions: Transaction[] }>('http://localhost:3000/transactionsHistory')
+          .subscribe(response => {
+            this.transactionHistory = response.transactions;
+            console.log(this.transactionHistory);
+          }, error => {
+            console.log(error);
+          });
         alert(response.message);
       }, error => {
         console.log(error);
@@ -59,19 +73,9 @@ export class TokenSystemComponent {
     this.http.get<{ tokens: number }>('http://localhost:3000/tokens')
       .subscribe(response => {
         this.tokenBalance = response.tokens;
+        this.transactionHistory = [];
       }, error => {
         console.log(error);
       });
   }
-
-  refreshTransactionHistory() {
-    this.http.get<{ transactions: Transaction[] }>('http://localhost:3000/transactionsHistory')
-      .subscribe(response => {
-        this.transactionHistory = response.transactions;
-        console.log(this.transactionHistory);
-      }, error => {
-        console.log(error);
-      });
-  }
-
 }

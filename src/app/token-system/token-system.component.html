@@ -33,8 +33,21 @@
     <h3>Token Balance: {{ tokenBalance }}</h3>
   </div>
   <div>
-    <h3>Transaction History: {{ refreshTransactionHistory() }}</h3>
-    <ul>
-      <li *ngFor="let transaction of transactionHistory">{{ transaction.description }} - {{ transaction.amount }} tokens - {{ transaction.date | date }}</li>
-    </ul>
+    <h3>Transaction History:</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Description</th>
+          <th>Amount</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let transaction of transactionHistory">
+          <td>{{ transaction.description }}</td>
+          <td>{{ transaction.amount }} tokens</td>
+          <td>{{ transaction.date | date }}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
