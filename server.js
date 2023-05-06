@@ -15,9 +15,15 @@ let transactions = [];
 // Purchase tokens endpoint
 app.post("/purchase", (req, res) => {
   const { amount, description } = req.body;
-  transactions.push(req.body);
   const cost = amount * tokenPrice;
   userTokens += amount;
+  transactions.push({
+    description: description,
+    type: "purchase",
+    amount: amount,
+    cost: cost,
+    date: new Date(),
+  });
   res.status(200).json({
     message: "Tokens purchased successfully!",
     tokens: userTokens,
@@ -33,13 +39,18 @@ app.post("/purchase", (req, res) => {
 // Spend tokens endpoint
 app.post("/spend", (req, res) => {
   const { amount, description } = req.body;
-  transactions.push(req.body);
   if (amount > userTokens) {
     res.status(400).json({
       message: "Insufficient tokens!",
     });
   } else {
     userTokens -= amount;
+    transactions.push({
+      description: description,
+      type: "spend",
+      amount: amount,
+      date: new Date(),
+    });
     res.status(200).json({
       message: "Tokens spent successfully!",
       tokens: userTokens,
@@ -52,8 +63,14 @@ app.post("/spend", (req, res) => {
   }
 });
 
+// Get current token balance
+app.get("/tokens", (req, res) => {
+  res.status(200).json({ tokens: userTokens });
+});
+
+// Get transaction history
 app.get("/transactionsHistory", (req, res) => {
-  res.status(200).json({ transactions });
+  res.status(200).json({ transactions: transactions });
 });
 
 app.listen(3000, () => {
