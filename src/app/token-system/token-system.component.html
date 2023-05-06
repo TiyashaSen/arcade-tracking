@@ -1,0 +1,40 @@
+<h2>Token System</h2>
+
+<div>
+  <form (ngSubmit)="purchaseTokens()" #purchaseForm="ngForm">
+    <h3>Purchase Tokens</h3>
+    <div>
+      <label for="amount">Amount:</label>
+      <input type="number" name="amount" id="amount" [(ngModel)]="purchaseAmount" required>
+    </div>
+    <div>
+      <label for="description">Description:</label>
+      <input type="text" name="description" id="description" [(ngModel)]="purchaseDescription" required>
+    </div>
+
+
+    <button type="submit">Purchase</button>
+    </form>
+
+    <form (ngSubmit)="spendTokens()" #spendForm="ngForm">
+      <h3>Spend Tokens</h3>
+      <div>
+        <label for="amount">Amount:</label>
+        <input type="number" name="amount" id="amount" [(ngModel)]="spendAmount" required>
+      </div>
+      <div>
+        <label for="description">Description:</label>
+        <input type="text" name="description" id="description" [(ngModel)]="spendDescription" required>
+      </div>
+      <button type="submit">Spend</button>
+    </form>
+  </div>
+  <div>
+    <h3>Token Balance: {{ tokenBalance }}</h3>
+  </div>
+  <div>
+    <h3>Transaction History: {{ refreshTransactionHistory() }}</h3>
+    <ul>
+      <li *ngFor="let transaction of transactionHistory">{{ transaction.description }} - {{ transaction.amount }} tokens - {{ transaction.date | date }}</li>
+    </ul>
+  </div>
