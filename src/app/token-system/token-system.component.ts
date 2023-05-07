@@ -8,6 +8,7 @@ interface Transaction {
   cost?: number;
   date: Date;
   message: string;
+  isSpend: boolean;
 }
 
 @Component({
@@ -24,7 +25,7 @@ export class TokenSystemComponent {
   spendDescription: string = '';
   tokenBalance: number = 0;
   random: number;
-  transactionHistory: { description: string, amount: number, date: Date }[] = [];
+  transactionHistory: { description: string, amount: number, date: Date, isSpend: boolean }[] = [];
 
   constructor(private http: HttpClient, private formBuilder: FormBuilder) {
     this.spendDescription = "";
@@ -46,7 +47,7 @@ export class TokenSystemComponent {
   }
 
   purchaseTokens() {
-    const data = { amount: this.purchaseAmount, description: this.purchaseDescription };
+    const data = { amount: this.purchaseAmount, description: this.purchaseDescription, isSpend: false};
     this.http.post<{ message: string }>('http://localhost:3000/purchase', data)
       .subscribe(response => {
         this.refreshTokenBalance();
@@ -64,7 +65,7 @@ export class TokenSystemComponent {
   }
 
   spendTokens() {
-    const data = { amount: this.spendAmount, description: this.spendDescription };
+    const data = { amount: this.spendAmount, description: this.spendDescription, isSpend: true};
     this.http.post<{ message: string }>('http://localhost:3000/spend', data)
       .subscribe(response => {
         this.refreshTokenBalance();
@@ -73,10 +74,14 @@ export class TokenSystemComponent {
             this.transactionHistory = response.transactions;
             console.log(this.transactionHistory);
           }, error => {
+            alert(response.message);
             console.log(error);
           });
         alert(response.message);
       }, error => {
+        if (error.status === 400) {
+          alert(error.error.message);
+        }
         console.log(error);
       });
   }
@@ -91,4 +96,6 @@ export class TokenSystemComponent {
         console.log(error);
       });
   }
+
+
 }
