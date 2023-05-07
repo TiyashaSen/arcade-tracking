@@ -23,6 +23,7 @@ export class TokenSystemComponent {
   spendAmount: number = 0;
   spendDescription: string = '';
   tokenBalance: number = 0;
+  random: number;
   transactionHistory: { description: string, amount: number, date: Date }[] = [];
 
   constructor(private http: HttpClient, private formBuilder: FormBuilder) {
@@ -32,7 +33,7 @@ export class TokenSystemComponent {
   }
 
   ngOnInit(): void {
-    
+    this.random = Math.random();
     this.purchaseForm = this.formBuilder.group({
       amount: ['', Validators.required],
       description: ['', Validators.required]

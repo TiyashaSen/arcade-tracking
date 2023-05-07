@@ -15,6 +15,7 @@ let transactions = [];
 // Purchase tokens endpoint
 app.post("/purchase", (req, res) => {
   const { amount, description } = req.body;
+
   const cost = amount * tokenPrice;
   userTokens += amount;
   transactions.push({
@@ -45,9 +46,9 @@ app.post("/spend", (req, res) => {
   res.setHeader("Pragma", "no-cache");
   res.setHeader("Expires", "0");
   const { amount, description } = req.body;
-  if (amount > userTokens) {
+  if (amount > userTokens || userTokens <= 4) {
     res.status(400).json({
-      message: "Insufficient tokens!",
+      message: "Insufficient tokens to play the game!",
     });
   } else {
     userTokens -= amount;
@@ -74,7 +75,7 @@ app.get("/tokens", (req, res) => {
   res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
   res.setHeader("Pragma", "no-cache");
   res.setHeader("Expires", "0");
-  res.status(200).json({ tokens: userTokens });
+  res.status(200).json({ tokens: userTokens * tokenPrice });
 });
 
 // Get transaction history
