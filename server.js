@@ -93,14 +93,12 @@ app.get("/transactionsHistory", (req, res) => {
   res.status(200).json({ transactions: transactions });
 });
 
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
-  console.log(`Server listening on port ${port}`);
-});
-
 app.use(express.static(__dirname + "/dist/arcade-token-system"));
 app.get("/*", function (req, res) {
   res.sendFile(path.join(__dirname + "/dist/arcade-token-system/index.html"));
 });
 
-app.listen(process.env.PORT || 8080);
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+  console.log(`Server listening on port ${port}`);
+});
