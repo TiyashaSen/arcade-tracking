@@ -43,18 +43,15 @@ app.post("/purchase", (req, res) => {
 });
 
 // Spend tokens endpoint
+// Spend tokens endpoint
 app.post("/spend", (req, res) => {
-  res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-  res.setHeader("Pragma", "no-cache");
-  res.setHeader("Expires", "0");
   const { amount, description } = req.body;
   const remainingTokens = userTokens - amount;
   if (remainingTokens < 4) {
     res.status(400).json({
       message: "You must keep a minimum balance of 4 tokens!",
     });
-  }
-  if (amount > userTokens || userTokens <= 4) {
+  } else if (amount > userTokens || userTokens <= 4) {
     res.status(400).json({
       message: "Insufficient tokens to play the game!",
     });
@@ -67,6 +64,9 @@ app.post("/spend", (req, res) => {
       date: new Date(),
       status: "Spent",
     });
+    res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+    res.setHeader("Pragma", "no-cache");
+    res.setHeader("Expires", "0");
     res.status(200).json({
       message: "Tokens spent successfully!",
       tokens: userTokens,

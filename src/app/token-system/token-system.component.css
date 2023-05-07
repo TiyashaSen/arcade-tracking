@@ -1,11 +1,44 @@
-h2 {
-  text-align: center;
-}
-
 form {
   display: flex;
   flex-direction: column;
   margin-bottom: 20px;
+}
+
+h2 {
+  text-align: center; /* centers the heading */
+  color: rgba(9, 8, 46, 0.26); /* change to the desired text color */
+  background-color: rgb(124, 213, 193);
+  padding: 10px; /* adds padding around the heading */
+}
+
+h3{
+    color: #008CBA;
+    font-size: 24px;
+    text-align: left;
+}
+
+label {
+  display: block;
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: rgb(131, 62, 62);
+  text-shadow: 1px 1px #fff;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+h4 {
+  color: #008CBA;
+  font-size: 24px;
+  text-align: right;
+  margin-right: 60px; /* add some left margin */
+}
+
+h5 {
+  text-align: center;
+  font-size: 24px;
+  color: #008CBA;
 }
 
 label {
@@ -20,12 +53,14 @@ input {
 }
 
 button {
-  padding: 10px;
+  padding: 5px; /* Adjusted padding value */
   border-radius: 5px;
   border: none;
   background-color: #008CBA;
   color: white;
   cursor: pointer;
+  width: 100px; /* Fixed width */
+  height: 30px;
 }
 
 table {
@@ -50,3 +85,5 @@ th:first-child,
 td:first-child {
   width: 60%;
 }
+
+
