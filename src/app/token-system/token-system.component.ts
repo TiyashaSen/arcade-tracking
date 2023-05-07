@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 interface Transaction {
   description: string;
@@ -15,22 +16,32 @@ interface Transaction {
   styleUrls: ['./token-system.component.css']
 })
 export class TokenSystemComponent {
-  purchaseAmount = 0;
-  purchaseDescription = "";
-  spendAmount = 0;
-  //tokenBalance = 0;
-  spendDescription: string = ""; // add initialization here
-  transactionHistory: Transaction[] = [];
-  tokenBalance: number | null = null;
+  purchaseForm: FormGroup;
+  spendForm: FormGroup;
+  purchaseAmount: number = 0;
+  purchaseDescription: string = '';
+  spendAmount: number = 0;
+  spendDescription: string = '';
+  tokenBalance: number = 0;
+  transactionHistory: { description: string, amount: number, date: Date }[] = [];
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private formBuilder: FormBuilder) {
     this.spendDescription = "";
     this.transactionHistory = [];
-    this.tokenBalance = null;
+    this.tokenBalance = 0;
   }
 
-  ngOnInit() {
-    this.refreshTokenBalance();
+  ngOnInit(): void {
+    
+    this.purchaseForm = this.formBuilder.group({
+      amount: ['', Validators.required],
+      description: ['', Validators.required]
+    });
+
+    this.spendForm = this.formBuilder.group({
+      amount: ['', Validators.required],
+      description: ['', Validators.required]
+    });
   }
 
   purchaseTokens() {
@@ -69,11 +80,12 @@ export class TokenSystemComponent {
       });
   }
 
+
   refreshTokenBalance() {
+    //this.clearTokenData();
     this.http.get<{ tokens: number }>('http://localhost:3000/tokens')
       .subscribe(response => {
         this.tokenBalance = response.tokens;
-        this.transactionHistory = [];
       }, error => {
         console.log(error);
       });

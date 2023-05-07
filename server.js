@@ -24,6 +24,9 @@ app.post("/purchase", (req, res) => {
     cost: cost,
     date: new Date(),
   });
+  res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+  res.setHeader("Pragma", "no-cache");
+  res.setHeader("Expires", "0");
   res.status(200).json({
     message: "Tokens purchased successfully!",
     tokens: userTokens,
@@ -38,6 +41,9 @@ app.post("/purchase", (req, res) => {
 
 // Spend tokens endpoint
 app.post("/spend", (req, res) => {
+  res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+  res.setHeader("Pragma", "no-cache");
+  res.setHeader("Expires", "0");
   const { amount, description } = req.body;
   if (amount > userTokens) {
     res.status(400).json({
@@ -73,12 +79,12 @@ app.get("/tokens", (req, res) => {
 
 // Get transaction history
 app.get("/transactionsHistory", (req, res) => {
-  res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-  res.setHeader("Pragma", "no-cache");
-  res.setHeader("Expires", "0");
   res.status(200).json({ transactions: transactions });
 });
 
 app.listen(3000, () => {
+  transactions = [];
+  userTokens = 0;
+
   console.log("Server started on port 3000");
 });

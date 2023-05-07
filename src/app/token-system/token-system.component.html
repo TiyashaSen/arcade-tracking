@@ -5,49 +5,66 @@
     <h3>Purchase Tokens</h3>
     <div>
       <label for="amount">Amount:</label>
-      <input type="number" name="amount" id="amount" [(ngModel)]="purchaseAmount" required>
+      <input type="number" name="amount" id="amount" [(ngModel)]="purchaseAmount" required #amount="ngModel">
+      <div *ngIf="amount.invalid && (amount.dirty || amount.touched)">
+        <div *ngIf="purchaseForm.controls['amount']['errors']?.['required']">Amount is required.</div>
+      </div>
     </div>
     <div>
       <label for="description">Description:</label>
-      <input type="text" name="description" id="description" [(ngModel)]="purchaseDescription" required>
+      <input type="text" name="description" id="description" [(ngModel)]="purchaseDescription" required #description="ngModel">
+      <div *ngIf="description.invalid && (description.dirty || description.touched)">
+        <div *ngIf="description.errors && description.errors['required']">Description is required.</div>
+      </div>
     </div>
 
+    <button type="submit" [disabled]="!purchaseForm.valid">Purchase</button>
+  </form>
 
-    <button type="submit">Purchase</button>
-    </form>
+  <form (ngSubmit)="spendTokens()" #spendForm="ngForm">
+    <h3>Spend Tokens</h3>
+    <div>
+      <label for="amount">Amount:</label>
+      <input type="number" name="amount" id="amount" [(ngModel)]="spendAmount" required>
 
-    <form (ngSubmit)="spendTokens()" #spendForm="ngForm">
-      <h3>Spend Tokens</h3>
-      <div>
-        <label for="amount">Amount:</label>
-        <input type="number" name="amount" id="amount" [(ngModel)]="spendAmount" required>
+
+      <div *ngIf="spendForm.controls['amount'].invalid && (spendForm.controls['amount'].touched || spendForm.controls['amount'].dirty)">
+        <div *ngIf="spendForm.controls['amount'].errors?.['required']">Amount is required.</div>
       </div>
-      <div>
-        <label for="description">Description:</label>
-        <input type="text" name="description" id="description" [(ngModel)]="spendDescription" required>
+    </div>
+
+    <div>
+      <label for="description">Description:</label>
+      <input type="text" name="description" id="description" [(ngModel)]="spendDescription" required>
+
+      <div *ngIf="spendForm.controls['description'].invalid && (spendForm.controls['description'].touched || spendForm.controls['description'].dirty)">
+        <div *ngIf="spendForm.controls['description']['errors']?.['required']">Description is required.</div>
       </div>
-      <button type="submit">Spend</button>
-    </form>
-  </div>
-  <div>
-    <h3>Token Balance: {{ tokenBalance }}</h3>
-  </div>
-  <div>
-    <h3>Transaction History:</h3>
-    <table>
-      <thead>
-        <tr>
-          <th>Description</th>
-          <th>Amount</th>
-          <th>Date</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let transaction of transactionHistory">
-          <td>{{ transaction.description }}</td>
-          <td>{{ transaction.amount }} tokens</td>
-          <td>{{ transaction.date | date }}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+    </div>
+    <button type="submit" [disabled]="!spendForm.valid">Spend</button>
+  </form>
+</div>
+
+<div>
+  <h3>Token Balance: {{ tokenBalance }}</h3>
+</div>
+
+<div>
+  <h3>Transaction History:</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Description</th>
+        <th>Amount</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let transaction of transactionHistory">
+        <td>{{ transaction.description }}</td>
+        <td>{{ transaction.amount }} tokens</td>
+        <td>{{ transaction.date | date }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
