@@ -9,6 +9,7 @@ interface Transaction {
   date: Date;
   message: string;
   isSpend: boolean;
+  status: string;
 }
 
 @Component({
@@ -25,7 +26,7 @@ export class TokenSystemComponent {
   spendDescription: string = '';
   tokenBalance: number = 0;
   random: number;
-  transactionHistory: { description: string, amount: number, date: Date, isSpend: boolean }[] = [];
+  transactionHistory: { description: string, amount: number, date: Date, isSpend: boolean, status: string }[] = [];
 
   constructor(private http: HttpClient, private formBuilder: FormBuilder) {
     this.spendDescription = "";

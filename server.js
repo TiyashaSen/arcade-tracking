@@ -24,6 +24,7 @@ app.post("/purchase", (req, res) => {
     amount: amount,
     cost: cost,
     date: new Date(),
+    status: "Purchased",
   });
   res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
   res.setHeader("Pragma", "no-cache");
@@ -36,6 +37,7 @@ app.post("/purchase", (req, res) => {
       amount: amount,
       cost: cost,
       date: new Date(),
+      status: "Purchased",
     },
   });
 });
@@ -63,6 +65,7 @@ app.post("/spend", (req, res) => {
       type: "spend",
       amount: amount,
       date: new Date(),
+      status: "Spent",
     });
     res.status(200).json({
       message: "Tokens spent successfully!",
@@ -71,6 +74,7 @@ app.post("/spend", (req, res) => {
         description: description,
         amount: amount,
         date: new Date(),
+        status: "Spent",
       },
     });
   }
