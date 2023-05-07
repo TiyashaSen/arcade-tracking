@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { environment } from '../../environments/environments.prod'
 
+const API_URL = environment.apiUrl;
 interface Transaction {
   description: string;
   amount: number;
@@ -49,10 +51,10 @@ export class TokenSystemComponent {
 
   purchaseTokens() {
     const data = { amount: this.purchaseAmount, description: this.purchaseDescription, isSpend: false};
-    this.http.post<{ message: string }>('http://localhost:3000/purchase', data)
+    this.http.post<{ message: string }>('API_URL/purchase', data)
       .subscribe(response => {
         this.refreshTokenBalance();
-        this.http.get<{ transactions: Transaction[] }>('http://localhost:3000/transactionsHistory')
+        this.http.get<{ transactions: Transaction[] }>('API_URL/transactionsHistory')
           .subscribe(response => {
             this.transactionHistory = response.transactions;
             console.log(this.transactionHistory);
@@ -67,10 +69,10 @@ export class TokenSystemComponent {
 
   spendTokens() {
     const data = { amount: this.spendAmount, description: this.spendDescription, isSpend: true};
-    this.http.post<{ message: string }>('http://localhost:3000/spend', data)
+    this.http.post<{ message: string }>('API_URL/spend', data)
       .subscribe(response => {
         this.refreshTokenBalance();
-        this.http.get<{ transactions: Transaction[] }>('http://localhost:3000/transactionsHistory')
+        this.http.get<{ transactions: Transaction[] }>('API_URL/transactionsHistory')
           .subscribe(response => {
             this.transactionHistory = response.transactions;
             console.log(this.transactionHistory);
@@ -90,7 +92,7 @@ export class TokenSystemComponent {
 
   refreshTokenBalance() {
     //this.clearTokenData();
-    this.http.get<{ tokens: number }>('http://localhost:3000/tokens')
+    this.http.get<{ tokens: number }>('API_URL/tokens')
       .subscribe(response => {
         this.tokenBalance = response.tokens;
       }, error => {

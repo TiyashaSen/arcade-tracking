@@ -7,6 +7,7 @@ const app = express();
 
 app.use(cors());
 app.use(bodyParser.json());
+app.use(express.static(__dirname + "/dist/arcade-token-system"));
 
 let tokenPrice = 0.25;
 let userTokens = 0;
@@ -93,7 +94,6 @@ app.get("/transactionsHistory", (req, res) => {
   res.status(200).json({ transactions: transactions });
 });
 
-app.use(express.static(__dirname + "/dist/arcade-token-system"));
 app.get("/*", function (req, res) {
   res.sendFile(path.join(__dirname + "/dist/arcade-token-system/index.html"));
 });
