@@ -51,10 +51,10 @@ export class TokenSystemComponent {
 
   purchaseTokens() {
     const data = { amount: this.purchaseAmount, description: this.purchaseDescription, isSpend: false};
-    this.http.post<{ message: string }>('API_URL/purchase', data)
+    this.http.post<{ message: string }>(API_URL + '/purchase', data)
       .subscribe(response => {
         this.refreshTokenBalance();
-        this.http.get<{ transactions: Transaction[] }>('API_URL/transactionsHistory')
+        this.http.get<{ transactions: Transaction[] }>(API_URL + '/transactionsHistory')
           .subscribe(response => {
             this.transactionHistory = response.transactions;
             console.log(this.transactionHistory);
@@ -69,10 +69,10 @@ export class TokenSystemComponent {
 
   spendTokens() {
     const data = { amount: this.spendAmount, description: this.spendDescription, isSpend: true};
-    this.http.post<{ message: string }>('API_URL/spend', data)
+    this.http.post<{ message: string }>(API_URL + '/spend', data)
       .subscribe(response => {
         this.refreshTokenBalance();
-        this.http.get<{ transactions: Transaction[] }>('API_URL/transactionsHistory')
+        this.http.get<{ transactions: Transaction[] }>(API_URL + '/transactionsHistory')
           .subscribe(response => {
             this.transactionHistory = response.transactions;
             console.log(this.transactionHistory);
@@ -92,7 +92,7 @@ export class TokenSystemComponent {
 
   refreshTokenBalance() {
     //this.clearTokenData();
-    this.http.get<{ tokens: number }>('API_URL/tokens')
+    this.http.get<{ tokens: number }>(API_URL + '/tokens')
       .subscribe(response => {
         this.tokenBalance = response.tokens;
       }, error => {
