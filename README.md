@@ -13,9 +13,8 @@ https://arcade-token-tracking-system.herokuapp.com/
 
 ## Development server
 
-Local setup: Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
-
-Steps to run in local:
+Though the application has a production setup, for any development changes, following is the setup for local.
+Local setup: Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if changes is been made in any of the source files. For running of server.js, run `node server.js`
 
 ## Code scaffolding
 
