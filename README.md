@@ -6,12 +6,16 @@ The goal of this exercise is to create a token system for an arcade, which allow
 Create a simple UI and ledger system that records the token balance for a single customer and provides a detailed history of transactions.
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.0.0.
 
+## Production setup: 
+
+The application is deployed in the following link and is working in the following environment:
+https://arcade-token-tracking-system.herokuapp.com/
+
 ## Development server
 
 Local setup: Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
-Production setup: The application is deployed in the following link and is working in the following environment:
-https://arcade-token-tracking-system.herokuapp.com/
+Steps to run in local:
 
 ## Code scaffolding
 
