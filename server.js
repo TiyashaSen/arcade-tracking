@@ -65,9 +65,6 @@ app.post("/spend", (req, res) => {
       date: new Date(),
       status: "Spent",
     });
-    res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-    res.setHeader("Pragma", "no-cache");
-    res.setHeader("Expires", "0");
     res.status(200).json({
       message: "Tokens spent successfully!",
       tokens: userTokens,
@@ -83,9 +80,6 @@ app.post("/spend", (req, res) => {
 
 // Get current token balance
 app.get("/tokens", (req, res) => {
-  res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-  res.setHeader("Pragma", "no-cache");
-  res.setHeader("Expires", "0");
   res.status(200).json({ tokens: userTokens * tokenPrice });
 });
 
