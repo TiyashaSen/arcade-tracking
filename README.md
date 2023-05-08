@@ -8,7 +8,10 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Local setup: Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+
+Production setup: The application is deployed in the following link and is working in the following environment:
+https://arcade-token-tracking-system.herokuapp.com/
 
 ## Code scaffolding
 
